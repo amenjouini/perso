@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Buttons</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('ghofi.png'); /* Replace with your Paint image file */
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .button {
+      position: absolute;
+      padding: 30px 45px;
+      font-size: 40px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .yes-button {
+      background-color: #4CAF50;
+      color: white;
+      left: 40%;
+      top: 60%;
+      transform: translate(-50%, -50%);
+    }
+
+    .no-button {
+      background-color: #FF6347;
+      color: white;
+      left: 60%;
+      top: 60%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <button class="button yes-button" id="yesButton">Yes</button>
+  <button class="button no-button" id="noButton">No</button>
+
+  <!-- Include Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+  <script>
+    const noButton = document.getElementById("noButton");
+    const yesButton = document.getElementById("yesButton");
+    const body = document.body;
+
+    // Make the "No" button move randomly
+    noButton.addEventListener("mouseenter", () => {
+      const bodyWidth = body.offsetWidth;
+      const bodyHeight = body.offsetHeight;
+
+      // Generate random positions within the visible area of the body
+      const randomX = Math.random() * (bodyWidth - noButton.offsetWidth);
+      const randomY = Math.random() * (bodyHeight - noButton.offsetHeight);
+
+      // Move the "No" button to the new random position
+      noButton.style.left = `${randomX}px`;
+      noButton.style.top = `${randomY}px`;
+    });
+
+    // Trigger fireworks on clicking "Yes"
+    yesButton.addEventListener("click", () => {
+      // Fire confetti
+      const duration = 15 * 1000; // 5 seconds
+      const end = Date.now() + duration;
+
+      const interval = setInterval(() => {
+        if (Date.now() > end) {
+          clearInterval(interval);
+        }
+
+        confetti({
+          particleCount: 100,
+          startVelocity: 30,
+          spread: 360,
+          origin: {
+            x: Math.random(),
+            y: Math.random() - 0.2, // Slightly above the center
+          },
+        });
+      }, 250);
+    });
+  </script>
+</body>
+</html>
